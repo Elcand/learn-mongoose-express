@@ -19,6 +19,11 @@ app.get('/', (req, res) => {
   res.send('halo tod');
 });
 
+app.get('/products', async (req, res) => {
+  const products = await Product.find({});
+  res.render('products', { products });
+});
+
 app.listen(3000, () => {
   console.log('shop app is running on port 3000');
 });
