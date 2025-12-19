@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Product = require('./models/product');
+const Product = require('./models/porduct');
 
 mongoose.connect('mongodb://127.0.0.1/shop_db').then(() => {
   console.log('connected to database');
