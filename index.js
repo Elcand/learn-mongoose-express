@@ -33,8 +33,14 @@ app.get('/products/create', (req, res) => { //  create
 })
 
 app.get('/products', async (req, res) => {
-  const products = await Product.find({});
-  res.render('products/index', { products, category: 'All' });
+  const category = req.query.category;
+  if (category) {
+    const products = await Product.find({ category });
+    res.render('products/index', { products, category });
+  }else{
+    const products = await Product.find({});
+    res.render('products/index', { products, category: 'All' });
+  }
 });
 
 app.post('/products', wrapAsync(async (req, res) => { // store
