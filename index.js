@@ -58,6 +58,11 @@ app.put('/products/:id', async (req, res) => { // edit
   res.redirect(`/products/${product._id}`);
 });
 
+app.delete('/products/:id', async (req, res) => { // edit
+  await Product.findByIdAndDelete(req.params.id);
+  res.redirect("/products");
+});
+
 app.listen(3000, () => {
   console.log('shop app is running on port 3000');
 });
