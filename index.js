@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override') // for update data
 const mongoose = require('mongoose');
 const app = express();
 
@@ -16,7 +16,7 @@ mongoose.connect('mongodb://127.0.0.1/shop_db').then(() => {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method')) // for update data
 
 function wrapAsync(fn) {
     return function (req, res, next) {
@@ -51,6 +51,11 @@ app.get('/products/:id', async (req, res) => { // show
 app.get('/products/:id/edit', async (req, res) => { // edit
   const product = await Product.findById(req.params.id);
   res.render('products/edit', { product });
+});
+
+app.put('/products/:id', async (req, res) => { // edit
+  const product = await Product.findByIdAndUpdate(req.params.id, req.body , { runValidators: true, new: true });
+  res.redirect(`/products/${product._id}`);
 });
 
 app.listen(3000, () => {
