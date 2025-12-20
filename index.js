@@ -44,6 +44,25 @@ app.post('/garments', wrapAsync(async (req, res) => { // store
     res.redirect(`/garments`)
 }))
 
+app.get('/garments/:id', async (req, res) => { // show
+  const garment = await Garment.findById(req.params.id);
+  res.render('garments/show', { garment });
+});
+
+app.get('/garments/:garment_id/product/create', async (req, res) => {
+  const garment_id = req.params.garment_id;
+  res.render('products/create', { garment_id });
+})
+
+app.post('/garments/:garment_id/product', wrapAsync(async (req, res) => {
+  const garment = await Garment.findById(req.params.garment_id);  
+  const product = new Product(req.body);
+  garment.products.push(product);
+  await garment.save();
+  await product.save();
+  res.redirect(`/garments/${garment._id}`);
+}))
+
 app.get('/products/create', (req, res) => { //  create
   res.render('products/create')
 })
