@@ -45,8 +45,8 @@ app.post('/garments', wrapAsync(async (req, res) => { // store
 }))
 
 app.get('/garments/:id', async (req, res) => { // show
-  const garment = await Garment.findById(req.params.id);
-  res.render('garments/show', { garment });
+  const garment = await Garment.findById(req.params.id).populate('products');
+  res.render('garments/show', { garment, products: garment.products });
 });
 
 app.get('/garments/:garment_id/product/create', async (req, res) => {
