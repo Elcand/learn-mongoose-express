@@ -8,10 +8,6 @@ const garmentSchema = new mongoose.Schema({
   location: {
     type: String,
   },
-  price: {
-    type: Number,
-    required: true
-  },
   contact: {
     type: String,
     required: [true, 'Contact is required']
